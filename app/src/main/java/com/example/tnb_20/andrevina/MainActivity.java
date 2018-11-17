@@ -10,6 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void adivinarNumero() {
+        
         final EditText editText = findViewById(R.id.editText);
         String st = String.valueOf(editText.getText());
         int numero = Integer.parseInt(st);
@@ -76,11 +83,14 @@ public class MainActivity extends AppCompatActivity {
             intentos++;
         } else if (numero == rango) {
             jugador.add(new Jugador(name,intentos));
+            Jugador j1 = new Jugador(name,intentos);
+            escribirFichero(j1);
             Context context = getApplicationContext();
             CharSequence text = "Lo has adivinado";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+            intentos = 0;
             rango = generateRandom();
             preguntarNombre();
         }
@@ -109,5 +119,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         return name;
+    }
+
+    private void escribirFichero(Jugador j){
+        try {
+            OutputStreamWriter fout =
+                    new OutputStreamWriter(
+                            openFileOutput("jugadors.txt",Context.MODE_APPEND));
+
+            fout.write(j.getName() + "," + j.getIntentos());
+            fout.append("\r\n");
+            fout.close();
+
+        } catch (Exception  e) {
+            e.printStackTrace();
+        }
     }
 }

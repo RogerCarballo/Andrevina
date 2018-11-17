@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
             intentos = 0;
             rango = generateRandom();
+            intentos = 0;
             preguntarNombre();
         }
     }

@@ -38,6 +38,7 @@ public class ModelFame extends Activity{
                 tablaRecord.setText(tablaRecord.getText() + jug.toString());
             }
         }else{
+            
             tablaRecord.setText(tablaRecord.getText() + "No hay datos registrados");
         }
     }
